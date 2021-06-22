@@ -20,6 +20,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { NgxSpinnerModule } from "ngx-spinner";
+import { ProdutoAddComponent } from './components/produtos/produto-add/produto-add.component';
 
 
 
@@ -30,7 +31,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     ProdutoDetalheComponent,
     SidebarComponent,
     NavComponent,
-    TituloComponent
+    TituloComponent,
+    ProdutoAddComponent
   
    ],
   imports: [
