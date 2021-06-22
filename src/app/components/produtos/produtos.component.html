@@ -1,0 +1,146 @@
+<app-titulo [titulo]="'Produtos'" ></app-titulo>
+<router-outlet></router-outlet>
+<button type="button" class="btn btn-sm btn-primary btn-create" 
+  tooltip="Criar Produto" (click)="openModal(create)">
+  <i class="fa fa-eraser">Criar Produto</i>
+</button>
+
+<ng-template #create>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label>Nome</label>
+          <input type="text" 
+          class="form-control is-invalid" formControlName= "nome" placeholder="" >
+          <div class="invalid-feedback" >
+            O nome é obrigatorio
+          </div>
+        </div>
+      </div>  
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label>Quantidade</label>
+          <input type="text" class="form-control is-invalid" formControlName= "quantidade">
+          <div class="invalid-feedback" >
+            O nome é obrigatorio
+          </div>
+        </div>
+      </div>   
+    </form>
+    <br>
+    <button class="btn btn-secondary" >
+      Fechar
+    </button>
+    <button class="btn btn-primary"
+    (click)="salvarAlteracao()" >
+      Salvar Alterações
+    </button>
+    <br>
+    <br>
+  </div>
+</ng-template>
+
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>#</th>    
+      <th>Nome</th>
+      <th>Quantidade</th>
+      <th>Opçoes</th>
+    </tr>
+  </thead> 
+  <tbody *ngIf="produtos" ><!-- Structural Diretive -->
+    <tr *ngFor="let produto of produtos"  > <!-- PropertyBinding -->
+      <!-- Interpolação -->
+      <td>{{produto.id}}</td> 
+      <td>{{produto.nome}}</td>
+      <td>{{produto.quantidade}}</td>
+      <td>
+        <div class="btn-group">
+        <button class="btn btn-sm btn-success" tooltip="Editar Produto"
+         (click)="openModal(update)"
+          tooltip="Editar" >
+          <i class="fa fa-edit">Editar</i>
+        </button>
+
+        <ng-template #update>
+          <div class="modal-header">
+            <h4 class="modal-title pull-left">Modal</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label>Nome</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>  
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label>Quantidade</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>   
+            </form>
+            <br>
+            <button class="btn btn-secondary" >
+              Fechar
+            </button>
+            <button class="btn btn-primary" >
+              Salvar Alterações
+            </button>
+            <br>
+            <br>
+          </div>
+        </ng-template>
+
+        <button class="btn btn-sm btn-danger" (click)="openModal(delete)"
+        tooltip="Deletar">
+          <i class="fa fa-eraser">Deletar</i>
+        </button>
+        <ng-template #delete>
+          <div class="modal-body text-center">
+            <p>Do you want to comfirm?</p>
+            <button type="button" class="btn btn-default" (click)="confirm()">Sim </button>
+            <button type="button" class="btn btn-danger" (click)="decline()">Não </button>
+          </div>
+        </ng-template>
+
+
+      </div>
+    </td>        
+  </tr>
+</tbody>
+</table>
+<!-- /////////////////////////// TESTE ///////////////////////////////////////////////////// -->
+<form> 
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <label>Nome</label>
+      <input type="text" class="form-control" formControlName= "nome" >
+    </div>
+    <div class="form-group col-md-4">
+      <label>Quantidade</label>
+      <input type="text" class="form-control" formControlName= "quantidade">
+    </div>
+  </div>  
+</form>
+<br>
+<button class="btn btn-secondary" >
+  Fechar
+</button>
+<button class="btn btn-primary" (click)="salvarAlteracao()">
+  Salvar Alterações
+</button>
+<br>
+<br>
