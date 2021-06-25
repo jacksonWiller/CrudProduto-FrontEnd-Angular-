@@ -1,59 +1,88 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-
-  <label for="first-name">First Name: </label>
-  <input id="first-name" type="text" formControlName="firstName">
-
-  <div *ngIf=" profileForm.controls['firstName'].invalid && (profileForm.controls['firstName'].dirty || profileForm.controls['firstName'].touched)"
+<!-- /////////////////////////// TESTE ///////////////////////////////////////////////////// -->
+<form [formGroup]="form" > 
+  <div class="form-row">
+    <div class=" col-md-8">
+      <label>Nome</label>
+      <input type="text" class="form-control" formControlName="nome"
+      [ngClass]="{'is-invalid': form.controls['nome'].invalid  && f.nome.touched}">
+      <div *ngIf="f.nome.hasError('required')" class="invalid-feedback" >
+        O nome é obrigatorio
+      </div>
+      <div *ngIf=" form.controls['nome'].invalid && (form.controls['nome'].dirty || form.controls['nome'].touched)"
+      class="alert alert-danger">
+      
+      <div *ngIf="form.errors?.required">
+        Name is required.
+      </div>
+      <div *ngIf="form.controls['nome'].errors?.minlength">
+        Name must be at least 4 characters long.
+      </div>
+      <div *ngIf="form.controls['nome'].errors?.forbiddenName">
+        Name cannot be Bob.
+      </div>
+    </div>
+  </div>
+  <div class=" col-md-8">
+    <label>Nome</label>
+    <input type="text" class="form-control" formControlName="quantidade"
+    [ngClass]="{'is-invalid': form.controls['quantidade'].invalid  && f.quantidade.touched}">
+    <div *ngIf="f.quantidade.hasError('required')" class="invalid-feedback" >
+      A quantidade é obrigatorio
+    </div>
+    <div *ngIf=" form.controls['quantidade'].invalid && (form.controls['quantidade'].dirty || form.controls['nome'].touched)"
     class="alert alert-danger">
-
-  <div *ngIf="profileForm.errors?.required">
-    Name is required.
-  </div>
-  <div *ngIf="profileForm.controls['firstName'].errors?.minlength">
-    Name must be at least 4 characters long.
-  </div>
-  <div *ngIf="profileForm.controls['firstName'].errors?.forbiddenName">
-    Name cannot be Bob.
+    
+    <div *ngIf="form.errors?.required">
+      A quantidade is required.
+    </div>
+    <div *ngIf="form.controls['quantidade'].errors?.minlength">
+      A quantidade must be at least 4 characters long.
+    </div>
+    <div *ngIf="form.controls['quantidade'].errors?.forbiddenName">
+      A quantidade cannot be Bob.
+    </div>
   </div>
 </div>
-
-  <label for="last-name">Last Name: </label>
-  <input id="last-name" type="text" formControlName="lastName">
-
-  <p>Complete the form to enable button.</p>
-<button type="submit" [disabled]="!profileForm.valid">Submit</button>
-
-</form>
-
-<!-- /////////////////////////// TESTE ///////////////////////////////////////////////////// -->
-<!-- <label for="name">Name: </label>
-<input id="name" type="text" [formControl]="name">
-<p>Value: {{ name.value }}</p>
-<br>
-<br>
-<form [formGroup] = "form" > 
-  <div class="form-row" >
-    <div class="form-group col-md-8">
-      <label>Nome</label>
-      <input type="text" class="form-control" 
-      formControlName= "nome" placeholder="">
-
-
-    </div>
-    <div class="form-group col-md-4">
-      <label>Quantidade</label>
-      <input type="text" class="form-control" 
-      formControlName= "quantidade" placeholder="">
-    </div>
-  </div>  
+</div>  
 </form>
 <br>
 <button class="btn btn-secondary" >
   Fechar
 </button>
-<button class="btn btn-primary" >
+<button class="btn btn-primary" (click)="salvarAlteracao()">
   Salvar Alterações
 </button>
 <br>
-<br> -->
+<br>
 
+<!-- 
+  
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    
+    <label for="first-name">First Name: </label>
+    <input id="first-name" type="text" formControlName="firstName">
+    
+    <div *ngIf=" profileForm.controls['firstName'].invalid && (profileForm.controls['firstName'].dirty || profileForm.controls['firstName'].touched)"
+    class="alert alert-danger">
+    
+    <div *ngIf="profileForm.errors?.required">
+      Name is required.
+    </div>
+    <div *ngIf="profileForm.controls['firstName'].errors?.minlength">
+      Name must be at least 4 characters long.
+    </div>
+    <div *ngIf="profileForm.controls['firstName'].errors?.forbiddenName">
+      Name cannot be Bob.
+    </div>
+  </div>
+  
+  <label for="last-name">Last Name: </label>
+  <input id="last-name" type="text" formControlName="lastName">
+  
+  <p>Complete the form to enable button.</p>
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+  
+</form>
+
+
+-->

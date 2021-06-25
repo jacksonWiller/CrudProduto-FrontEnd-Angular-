@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Produto } from 'src/app/models/Produto';
+import { ProdutoService } from 'src/app/services/produto.service';
 
 @Component({
   selector: 'app-produto-add',
@@ -8,36 +11,49 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class ProdutoAddComponent implements OnInit {
   form!: FormGroup;
-  get name() { return this.profileForm.get('firstName')};
-  
-  profileForm = new FormGroup({
-    firstName: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(4),
-    ]),
-    lastName: new FormControl(''),
-  });
+  produto = {} as Produto;
 
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.profileForm.value);
+  get f():any {
+    return this.form.controls;
   }
 
-  constructor() { }
+  constructor(private formBuilder : FormBuilder,
+              private router: ActivatedRoute,
+              private produtoService: ProdutoService
+    ) { }
 
   ngOnInit() {
     this.validation();
+    this.carregarEvento();
   }
 
   public validation(): void {
-    this.form = new FormGroup({
-      nome: new FormControl(
-      [Validators.required, Validators.minLength(4), Validators.maxLength(50)]),
-      quantidade: new FormControl('')
+    this.form = this.formBuilder.group({
+      nome: ['',
+        [Validators.required, Validators.minLength(4), Validators.maxLength(10)]
+      ],
+      quantidade: ['', Validators.required]
     })
   }
 
-  get nome() { return this.form.get('nome') };
+  public carregarEvento(): void {
+    const produtoIdParam = this.router.snapshot.paramMap.get('id');
+
+    if(produtoIdParam !== null ) {
+      this.produtoService.getPeodutoById(+produtoIdParam).subscribe({
+        next: (produto: Produto) => {
+          this.produto = {...produto}; //copiando produto e não apotando para o espaço de memoria
+          this.form.patchValue(this.produto);
+        },
+        error: (error: any) => {
+          console.error(error);
+        },
+        complete: () => {},
+      });
+    }
+    
+  }
+
 
   salvarAlteracao(){
 
