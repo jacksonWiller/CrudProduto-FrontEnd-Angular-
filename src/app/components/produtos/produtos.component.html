@@ -1,7 +1,7 @@
 <app-titulo [titulo]="'Produtos'" ></app-titulo>
 <router-outlet></router-outlet>
 <button type="button" class="btn btn-sm btn-primary btn-create" 
-  tooltip="Criar Produto" (click)="openModal(create)">
+  tooltip="Criar Produto" (click)="salvarAlteracao()">
   <i class="fa fa-eraser">Criar Produto</i>
 </button>
 
@@ -65,7 +65,7 @@
       <td>
         <div class="btn-group">
         <button class="btn btn-sm btn-success" tooltip="Editar Produto"
-         (click)="openModal(update)"
+         (click)="openModal($event,update, produto.id)"
           tooltip="Editar" >
           <i class="fa fa-edit">Editar</i>
         </button>
@@ -103,14 +103,13 @@
             <br>
           </div>
         </ng-template>
-
-        <button class="btn btn-sm btn-danger" (click)="openModal(delete)"
+        <button class="btn btn-sm btn-danger" (click)="openModal($event,delete, produto.id)"
         tooltip="Deletar">
           <i class="fa fa-eraser">Deletar</i>
         </button>
         <ng-template #delete>
           <div class="modal-body text-center">
-            <p>Do you want to comfirm?</p>
+            <p>Do you want to delete {{produtoId}}</p>
             <button type="button" class="btn btn-default" (click)="confirm()">Sim </button>
             <button type="button" class="btn btn-danger" (click)="decline()">Não </button>
           </div>

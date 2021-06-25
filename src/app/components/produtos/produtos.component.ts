@@ -21,6 +21,7 @@ import { ProdutoService } from 'src/app/services/produto.service'
 export class ProdutosComponent implements OnInit {
   public produtos: Produto[] = [];
   public modalRef!: BsModalRef;
+  public produtoId = 0;
 
 
   constructor(private produtoService: ProdutoService,
@@ -34,7 +35,9 @@ export class ProdutosComponent implements OnInit {
     this.getProdutos();
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(event: any, template: TemplateRef<any>, produtoId: number): void {
+    event.stopPropagation();
+    this.produtoId = produtoId;
     this.modalRef = this.modalService.show(template);
   }
 
