@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { Produto } from 'src/app/models/Produto';
 import { ProdutoService } from 'src/app/services/produto.service';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-produto-add',
@@ -12,6 +14,7 @@ import { ProdutoService } from 'src/app/services/produto.service';
 export class ProdutoAddComponent implements OnInit {
   form!: FormGroup;
   produto = {} as Produto;
+ 
 
   get f():any {
     return this.form.controls;
@@ -19,7 +22,9 @@ export class ProdutoAddComponent implements OnInit {
 
   constructor(private formBuilder : FormBuilder,
               private router: ActivatedRoute,
-              private produtoService: ProdutoService
+              private produtoService: ProdutoService,
+              private toastr: ToastrService,
+              private spinner: NgxSpinnerService
     ) { }
 
   ngOnInit() {
@@ -54,8 +59,41 @@ export class ProdutoAddComponent implements OnInit {
     
   }
 
+  public salvarAlteracao(): void{
+    this.spinner.show();
+    const produtoIdParam = this.router.snapshot.paramMap.get('id');
+    if(this.form.valid){
 
-  salvarAlteracao(){
+      this.produto = {...this.form.value}; //passar os valores do form para objeto
+
+      if(produtoIdParam !== null ){
+        this.produtoService.putProduto(+produtoIdParam , this.produto).subscribe(
+          () => this.toastr.success('Produto salvo com sucesso!', 'Sucesso'),
+          (error: any) => {
+            console.error(error);
+            console.log(this.produto);
+            this.spinner.hide(),
+            this.toastr.error('Erro ao salvar produto','Erro');
+          },
+          () => this.spinner.hide()
+        );
+      }
+      else{
+        this.produtoService.postProduto(this.produto).subscribe(
+          () => this.toastr.success('Produto salvo com sucesso!', 'Sucesso'),
+          (error: any) => {
+            console.error(error);
+            this.spinner.hide(),
+            this.toastr.error('Erro ao salvar produto','Erro');
+          },
+          () => this.spinner.hide()
+        );
+      } 
+    }
+    
+  }
+
+  public resetForm(): void{
 
   }
 

@@ -12,15 +12,27 @@ export class ProdutoService {
     constructor(private http: HttpClient) { }
 
     //observibles
-      getAllProdutos(): Observable<Produto[]> {
+      public getAllProdutos(): Observable<Produto[]> {
         return this.http.get<Produto[]>(this.baseURL);
       }
     
-      getEventosByNome(tema: string): Observable<Produto[]> {
+      public getEventosByNome(tema: string): Observable<Produto[]> {
         return this.http.get<Produto[]>(`${this.baseURL}/getByTema/${tema}`);
       }
     
-      getPeodutoById(id: number): Observable<Produto> {
+      public getPeodutoById(id: number): Observable<Produto> {
         return this.http.get<Produto>(`${this.baseURL}/${id}`);
+      }
+
+      public postProduto(produto: Produto): Observable<Produto> {
+        return this.http.post<Produto>(this.baseURL, produto);
+      }
+
+      public putProduto(id: number ,produto: Produto): Observable<Produto> {
+        return this.http.put<Produto>(`${this.baseURL}/${id}`, produto);
+      }
+
+      public deleteProduto(id: number): Observable<any> {
+        return this.http.delete(`${this.baseURL}/${id}`);
       }
 }

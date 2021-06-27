@@ -32,7 +32,7 @@ export class ProdutosComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.getProdutos();
+    this.carregarProdutos();
   }
 
   openModal(event: any, template: TemplateRef<any>, produtoId: number): void {
@@ -42,20 +42,38 @@ export class ProdutosComponent implements OnInit {
   }
 
   confirm():void {
-    this.toastr.success('Hello world!', 'Toastr fun!');
     this.modalRef.hide();
+    this.spinner.show();
+
+    this.produtoService.deleteProduto(this.produtoId).subscribe(
+      
+      (result: any) => {
+        if (result.message === 'Deletado') {
+          this.toastr.success('O produto foi deletado com Sucesso.', 'Deletado!');
+          this.spinner.hide();
+          this.carregarProdutos();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error(`Erro ao tentar deleter o evento ${this.produtoId}`, 'Erro');
+        this.spinner.hide();
+      },
+      () => this.spinner.hide(),
+    );
   }
 
   decline():void {
     this.modalRef.hide();
+    this.toastr.success('Hello world!', 'Toastr fun!');
   }
 
-  salvarAlteracao(){
-
+  salvarAlteracao(): void{
+    
   }
 
   //Get eventos observibles
-  public getProdutos(): void {
+  public carregarProdutos(): void {
     this.produtoService.getAllProdutos().subscribe({
       next: (produtos: Produto[]) => {
         this.produtos = produtos;
