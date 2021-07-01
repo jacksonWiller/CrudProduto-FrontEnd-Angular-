@@ -22,6 +22,10 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ProdutoAddComponent } from './components/produtos/produto-add/produto-add.component';
 
+import { UserComponent } from './user/user.component';
+import { LoginComponent } from './user/login/login.component';
+import { RegistrationComponent } from './user/registration/registration.component';
+
 
 
 @NgModule({
@@ -32,7 +36,10 @@ import { ProdutoAddComponent } from './components/produtos/produto-add/produto-a
     SidebarComponent,
     NavComponent,
     TituloComponent,
-    ProdutoAddComponent
+    ProdutoAddComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent,
   
    ],
   imports: [
