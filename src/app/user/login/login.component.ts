@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('token') != null) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/produtos']);
     }
   }
 
@@ -27,8 +27,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model)
       .subscribe(
         () => {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/produtos']);
           this.toastr.success('Logado com Sucesso');
+          console.log(this.model)
         },
         error => {
           this.toastr.error('Falha ao tentar Logar');
